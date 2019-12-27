@@ -7,13 +7,13 @@ class User extends React.Component {
 
         this.state = {
             users: [
-                
+
             ]
         }
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/users/')
+        fetch.get('http://localhost:5000/users/getAll')
             .then(response => {
                 this.setState({ users: response.data });
             })
