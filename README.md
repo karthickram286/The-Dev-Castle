@@ -1,2 +1,2 @@
-# The-Dev-Castle
+# The Dev Castle
 A place for developers to hangout
