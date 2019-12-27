@@ -16,7 +16,7 @@ class User extends React.Component {
         fetch('/users/getAll')
             .then(response => response.json())
             .then(response => {
-                this.setState({ users: response.data });
+                this.setState({ users: response[0].email });
             })
             .catch((err) => {
                 console.log(err);
