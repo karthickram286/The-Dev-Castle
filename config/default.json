@@ -1,0 +1,3 @@
+{
+    "MongoDBURI": "mongodb+srv://karthickram:6YksAdRKW4OBIjbL@castle-cluster-d92zc.mongodb.net/test?retryWrites=true&w=majority"
+}

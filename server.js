@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const path = require('path');
+
+const connectDB = require('./config/db.connect');
 
 const userRouter = require('./routes/user.routes');
 
@@ -9,23 +10,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ extended: false  }));
 
 /**
  * MongoDB connection
  */
-let mongoDbURI = "mongodb+srv://karthickram:6YksAdRKW4OBIjbL@castle-cluster-d92zc.mongodb.net/test?retryWrites=true&w=majority";
-mongoose.connect(mongoDbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-});
+connectDB();
 
 /**
  * Routers registration
  */
-app.use('/users', userRouter);
+app.use('/api/users', userRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
