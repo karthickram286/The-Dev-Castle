@@ -13,7 +13,7 @@ class User extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/users/getAll')
+        fetch('/users/getAll')
             .then(response => response.json())
             .then(response => {
                 this.setState({ users: response.data });
