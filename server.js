@@ -5,6 +5,7 @@ const path = require('path');
 const connectDB = require('./config/db.connect');
 
 const userRouter = require('./routes/user.routes');
+const authRouter = require('./routes/auth.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ connectDB();
  * Routers registration
  */
 app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));

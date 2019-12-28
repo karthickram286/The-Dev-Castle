@@ -5,6 +5,8 @@ const { check, validationResult } = require('express-validator');
 const logger = require('winston');
 const gravatar = require('gravatar');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const User = require('../models/user.model');
 
@@ -34,29 +36,24 @@ router.route('/add').post(registerUserValidations, async (req, res) => {
 
     // Checking if User already exists
     try {
-        let user = await User.findOne({ email });
-        if (user) {
+        let existingUser = await User.findOne({ email });
+        if (existingUser) {
             logger.warn('warn', `Email-Id already registered for ${email}`);
             return res.status(400).json({ errors: [{ msg: 'User already registered'}] });
         }
-    } catch (err) {
-        logger.error(`Server error: ${err}`);
-        return res.status(500).send(`Server error`);
-    }
 
-    // Hashing the password
-    const salt = await bcrypt.genSalt(10);
-    password = await bcrypt.hash(password, salt);
+        // Hashing the password
+        const salt = await bcrypt.genSalt(10);
+        password = await bcrypt.hash(password, salt);
 
-    // Creating an avatar for the user
-    const userAvatar = gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-    });
+        // Creating an avatar for the user
+        const userAvatar = gravatar.url(email, {
+            s: '200',
+            r: 'pg',
+            d: 'mm'
+        });
 
-    // Saving the User to DB
-    try {
+        // Saving the user to DB
         const user = new User({
             firstname: firstname,
             lastname: lastname,
@@ -66,9 +63,28 @@ router.route('/add').post(registerUserValidations, async (req, res) => {
         });
 
         await user.save();
-        return res.status(200).json({ 'status': 'User saved' });
+
+        // Returning JWT for the registered user
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+
+        jwt.sign(
+            payload, 
+            config.get('jwtSecret'),
+            { expiresIn: 36000 },
+            (err, token) => {
+                if (err) {
+                    throw err;
+                }
+                return res.status(200).json({ token });
+            });
+
     } catch (err) {
-        return res.status(500).send({ 'error': err });
+        logger.error(`Server error: ${err}`);
+        return res.status(500).send(`Server error`);
     }
 });
 
