@@ -1,5 +1,7 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
+const config = require('config');
+const axios = require('axios');
 
 const auth = require('../middleware/auth.middleware');
 const logger = require('../config/winston.logger');
@@ -85,6 +87,38 @@ router.get('/user/:userId', async (req, res) => {
         if (error.kind === 'ObjectId') {
             return res.status(400).json({ msg: `Profile not found` });
         }
+        return res.status(500).send('Server error');
+    }
+});
+
+/**
+ * @route   GET /api/profile/github/:username
+ * @desc    Get user-repos from github
+ * @access  Public
+ */
+router.get('/github/:username', async (req, res) => {
+    try {
+        const options = {
+            url: `http://api.github.com/users/${req.params.username}/repos?per_page=5
+            &sort=created:asc&client_id=${config.get('githubClientId')}
+            &client_secret=${config.get('githubClientSecret')}`,
+            method: 'GET',
+            headers: { 'user-agent': 'node.js'}
+        }
+        
+        axios(options)
+            .then(response => {
+                return res.status(200).json(response.data);
+            })
+            .catch(err => {
+                logger.error(err.message);
+                if (err.message.includes(404)) {
+                    return res.status(404).json({ msg: 'Github profile not found' });
+                }
+                return res.status(500).send(err.message);
+            });
+    } catch (error) {
+        console.log(error.message);
         return res.status(500).send('Server error');
     }
 });

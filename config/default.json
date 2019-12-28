@@ -1,4 +1,6 @@
 {
     "MongoDBURI": "mongodb+srv://karthickram:6YksAdRKW4OBIjbL@castle-cluster-d92zc.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "DevCastleSecretForJWT"
+    "jwtSecret": "DevCastleSecretForJWT",
+    "githubClientId": "eba40669a2231a9fc24d",
+    "githubClientSecret": "69f9e75cd8475620aa0d3e9e141ca4f03a2ddb13"
 }
