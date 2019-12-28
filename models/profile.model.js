@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
+const User = require('./user.model');
+
 const profileSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'User'
     },
     company: {
         type: String
@@ -46,7 +48,6 @@ const profileSchema = mongoose.Schema({
             },
             to: {
                 type: Date,
-                required: true
             },
             current: {
                 type: Boolean,
@@ -77,7 +78,6 @@ const profileSchema = mongoose.Schema({
             },
             to: {
                 type: Date,
-                required: true
             },
             current: {
                 type: Boolean,
