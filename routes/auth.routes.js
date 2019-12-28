@@ -5,10 +5,10 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const logger = require('winston');
 
 const auth = require('../middleware/auth.middleware');
 const User = require('../models/user.model');
+const logger = require('../config/winston.logger');
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ router.get('/', auth, async (req, res) => {
         const user = await User.findById(req.user.id).select('-password');
         return res.status(200).json(user);
     } catch (err) { 
-        logger.error('error', err.message);
+        logger.error(err.message);
         return res.status(500).send('Server error');
     }
 });
@@ -51,14 +51,14 @@ router.route('/signin').post(signinUserValidations, async (req, res) => {
         // Checking if User exists
         let user = await User.findOne({ email });
         if (!user) {
-            logger.error('error', `Invalid email or password`);
+            logger.error(`Invalid email or password`);
             return res.status(400).json({ errors: [{ msg: 'Invalid email or password'}] });
         }
 
         // Checking if the password is correct
-        const isPasswordMatch = bcrypt.compare(password, user.password);
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
-            logger.error('error', `Invalid email or password`);
+            logger.error(`Invalid email or password`);
             return res.status(400).json({ errors: [{ msg: 'Invalid email or password'}] });
         }
 

@@ -2,13 +2,13 @@
 
 const express = require('express');
 const { check, validationResult } = require('express-validator');
-const logger = require('winston');
 const gravatar = require('gravatar');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
 const User = require('../models/user.model');
+const logger = require('../config/winston.logger');
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ router.route('/add').post(registerUserValidations, async (req, res) => {
     try {
         let existingUser = await User.findOne({ email });
         if (existingUser) {
-            logger.warn('warn', `Email-Id already registered for ${email}`);
+            logger.warn(`Email-Id already registered for ${email}`);
             return res.status(400).json({ errors: [{ msg: 'User already registered'}] });
         }
 

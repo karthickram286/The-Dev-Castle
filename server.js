@@ -6,6 +6,7 @@ const connectDB = require('./config/db.connect');
 
 const userRouter = require('./routes/user.routes');
 const authRouter = require('./routes/auth.routes');
+const profileRouter = require('./routes/profile.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ connectDB();
  */
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/profile', profileRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
