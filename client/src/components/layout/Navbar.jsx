@@ -1,16 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
-        <nav className="navbar bg-dark">
-            <h1>
-                <a href="index.html"><i className="fas fa-code"></i>The Dev Castle</a>
-            </h1>
+        <nav className="navbar navbar-dark bg-primary">
+            <h2>
+                <Link to="/" style={{ textDecoration: 'none' }}>The Dev Castle</Link>
+            </h2>
 
             <ul>
-                <li><a href="profiles.html">Developers</a></li>
-                <li><a href="register.html">Register</a></li>
-                <li><a href="login.html">Login</a></li>
+                <li><Link to="profiles.html" style={{ textDecoration: 'none' }}>Developers</Link></li>
+                <li><Link to="/register" style={{ textDecoration: 'none' }}>Register</Link></li>
+                <li><Link to="/login" style={{ textDecoration: 'none' }}>Login</Link></li>
             </ul>
         </nav>
     );
