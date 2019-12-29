@@ -6,17 +6,16 @@ class User extends React.Component {
         super();
 
         this.state = {
-            users: [
-
-            ]
+            users: ''
         }
     }
 
     componentDidMount() {
-        fetch('/users/getAll')
-            .then(response => response.json())
+        axios.get('/api/users/getAll')
+            // .then(response => response.json())
             .then(response => {
-                this.setState({ users: response[0].email });
+                console.log(response);
+                this.setState({ users: response.data[0].email });
             })
             .catch((err) => {
                 console.log(err);

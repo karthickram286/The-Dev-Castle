@@ -1,14 +1,14 @@
-import React from 'react';
-
-import User from './components/user.component';
-
+import React, { Fragment } from 'react';
+import Navbar from './components/layout/Navbar';
+import Landing from './components/layout/Landing';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <User></User>
-    </div>
+    <Fragment>
+      <Navbar />
+      <Landing />
+    </Fragment>
   );
 }
 
