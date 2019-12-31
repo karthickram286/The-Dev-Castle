@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
         <div>
             <h2><span className="text-primary"><strong>Sign In</strong></span></h2>
@@ -10,26 +14,30 @@ const Login = () => {
             <form onSubmit= "">
                 <div className="form-group">
                     <label><strong>Email Address</strong></label>
-                    <input type="text"
+                    <input type="email"
                             placeholder="Enter your email address"
                             required
                             className="form-control"
+                            value={email}
+                            onChange={ e => setEmail(e.target.value) }
                     />
                     <br />
 
                     <label><strong>Password</strong></label>
-                    <input type="text"
+                    <input type="password"
                             placeholder="Password"
                             required
                             className="form-control"
+                            value={password}
+                            onChange={ e => setPassword(e.target.value) }
                     />
                     <br />
                 </div>
-                <button type="submit" class="btn btn-primary">Sign In</button>
+                <button type="submit" className="btn btn-primary">Sign In</button>
             </form>
-            <p>Don't have an account? <Link to="/login">Sign Up</Link></p>
+            <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
         </div>
     )
 }
 
-export default Login
+export default Login;
