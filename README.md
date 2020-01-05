@@ -1,4 +1,4 @@
-# The Dev Castle [![Build Status](https://travis-ci.com/karthickram286/The-Dev-Castle.svg?branch=master)](https://travis-ci.com/karthickram286/The-Dev-Castle) ![GitHub](https://img.shields.io/github/license/karthickram286/The-Dev-Castle)
+# The Dev Castle [![Build Status](https://travis-ci.com/karthickram286/The-Dev-Castle.svg?branch=master)](https://travis-ci.com/karthickram286/The-Dev-Castle)
 
 A place for developers to hangout
 
