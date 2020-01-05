@@ -13,6 +13,10 @@ A place for developers to hangout
   3. Run `npm run client` - To start only the client
   4. Run `npm test` - To run test cases
  
+## View the Live version
+https://the-dev-castle.herokuapp.com 
+(NOTE: Heroku puts the application to sleep if there is no activity. So, while opening the app, it may take some time load.)
+ 
 ## Report an Issue
 https://github.com/karthickram286/The-Dev-Castle/issues
 
